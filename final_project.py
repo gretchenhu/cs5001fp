@@ -27,8 +27,8 @@ image_temp = Image.open("images_fp/temp.jpg")
 
 # -----HEADR SECTION-----
 with st.container():
-    st.subheader("Hi, My name is Huiqin :eyes:")
-    st.title("Peeka and Guava's mom")
+    st.subheader("Hi, My name is Huiqin")
+    st.title("Peeka and Guava's mom :sparkles:")
     st.write("I adopted Peeka and Guava three months ago")
     st.write("[Our Instagram Page:sparkling_heart:>](https://www.instagram.com/peekaandguava)")
 
@@ -38,12 +38,13 @@ with st.container():
     st.write("---")
     left_column, right_column = st.columns(2)
     with left_column:
-        st.header("Why I am building this website")
+        st.header("Why I am building this website:grey_question:")
         st.write("##")
         st.write(
             """
-            Ever since I adopted my cats three months ago, I have been visiting the vet at least twice a month. \n
-            There is a severe shortage of vet across the U.S. right now\n
+            Ever since I adopted my cats, I have been visiting the vet at least twice a month. \n
+            It's very easy for small cats to get sick \n
+            But there is a severe shortage of vet across the U.S. right now\n
             And I noticed it's very hard to find vets and cat hospitals in the SF area\n
             """)
     with right_column:
@@ -76,7 +77,7 @@ with st.container():
 
 # --- ACTUAL LOCATOR ---
 with st.container():
-    st.header("Vet Locator")
+    st.header("Vet Locator :hospital:")
     district_list = ["SOMA", "Daly City", "Chinatown"]
 
 
@@ -112,7 +113,8 @@ with st.container():
 # --- CONTACT FORM ---
 with st.container():
     st.write("---")
-    st.header("Get In Touch With Me!")
+    st.subheader("If you have any questions, or would like to contribute more hospitals to the list,\n")
+    st.subheader("Please don't hesitate to get in touch with me!")
     st.write("##")
 
     # Website used: https://formsubmit.co/
