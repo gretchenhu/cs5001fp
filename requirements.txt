@@ -2,3 +2,8 @@ openpyxl==3.0.10
 plotly==4.14.3
 pandas==1.4.3
 streamlit==1.12.0
+streamlit_lottie==0.0.2
+requests==2.24.0
+Pillow==8.4.0
+protobuf~=3.19.0
+watchdog==2.1.8
