@@ -1,12 +1,11 @@
 import pandas as pd
-#pip install pandas openpyxl
 from PIL import Image
 import requests
 import streamlit as st
 from streamlit_lottie import st_lottie
 
 # Emoji collection page: https://www.webfx.com/tools/emoji-cheat-sheet/
-st.set_page_config(page_title="Mini Online Vet", page_icon=":crystall_ball:", layout="wide")
+st.set_page_config(page_title="Mini Online Vet", page_icon=":crystall_ball:")
 
 def load_lottieurl(url):
     r = requests.get(url)
@@ -46,9 +45,6 @@ with st.container():
             Ever since I adopted my cats three months ago, I have been visiting the vet at least twice a month. \n
             There is a severe shortage of vet across the U.S. right now\n
             And I noticed it's very hard to find vets and cat hospitals in the SF area\n
-            So I want to build a website that could:
-            - find cat hospitals / vet clinics based on your district
-            - find the closet cat hospital based on your coordinates
             """)
     with right_column:
         st_lottie(lottie_coding, height=600, key="meow")
@@ -57,20 +53,25 @@ with st.container():
 # ---Vet Locator---
 with st.container():
     st.write("---")
-    st.header("Vet Locators")
+    st.header("My Solution! :key:")
     st.write("##")
     image_column, text_column = st.columns((1, 2))
     with image_column:
         st.image(image_temp)
     with text_column:
-        st.subheader("Find pet hospitals based on your district")
         st.write(
             """
+            I decided to build a website that could:
+            - find cat hospitals / vet clinics based on your district
+            - find cat hospital based on your zip code
             Use this one to find pet hospitals based on your district!\n
-            Just select your district from the drop down bar\n
-            And the website will show you the pet hospitals in your district!
+            Just select your district and ZIP code from the drop down bar\n
+            And the website will show you the pet hospitals in your district!\n
+            The list includes mostly hospitals in the SF area\n
+            For emergency hospitals in the bay area\m
+            Please click the link below to see an Emergency Hospital Referral List compiled by SF SPCA :gift_heart:
             """)
-        st.markdown("[Click here...](https.//google.com)")
+        st.markdown("[Referral List by SF SPCA](https://www.sfspca.org/wp-content/uploads/2022/05/ESHoursMission_referralList_8.5x11-05.05.22_final5.pdf)")
 
 
 # --- ACTUAL LOCATOR ---
@@ -78,12 +79,34 @@ with st.container():
     st.header("Vet Locator")
     district_list = ["SOMA", "Daly City", "Chinatown"]
 
-    st.header("Please select")
-    district_selected = st.selectbox("Which neighborhood do you live in?",
-                                     options = district_list)
+
+    # import Excel file
+    datafile = pd.read_excel(
+        io='cat_hospital.xlsx',
+        engine='openpyxl',
+        sheet_name='Sheet1',
+        skiprows=0,
+        usecols='A:F',
+        nrows=25,
+    )
 
 
+    st.subheader("Let's try to find some hospitals in your neighborhood")
+    district = st.selectbox("Which neighborhood do you live in?",
+                                     options=datafile["Neighborhood"].unique())
+    datafile_bydistrict = datafile.query(
+        "Neighborhood == @district"
+    )
+    st.dataframe(datafile_bydistrict)
 
+    st.subheader("Now let's try to find them by your zip code!")
+    zip_selected = st.selectbox("What's your zipcode?",
+                                     options=datafile["ZIP_Code"].unique())
+
+    datafile_byzip = datafile.query(
+        "ZIP_Code == @zip_selected"
+    )
+    st.dataframe(datafile_byzip)
 
 
 # --- CONTACT FORM ---
@@ -107,7 +130,3 @@ with st.container():
         st.markdown(contact_form, unsafe_allow_html=True)
     with right_column:
         st.empty()
-
-
-#for the map, tuple(x, y), name of the vet clinic
-#one to search nearest vet by
